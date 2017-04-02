@@ -20,7 +20,6 @@ from cms_put import views
 urlpatterns = [
     url(r'^$', views.writeBase, name="Escribe el listado de las paginas"),
     url(r'^pagina/(\d+)$', views.pagina, name="recurso a traves de id"),
-    #url(r'^pagina/(.+)$', views.pagina2, name="recurso a traves de name"),
     url(r'^admin/', include(admin.site.urls)),
     url(r'(.*)', views.notfound, name="Recurso no encontrado")
 
