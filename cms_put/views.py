@@ -11,7 +11,6 @@ def notfound(request, rec):
     respuesta = "recurso " + rec + " no encontrado"
     return HttpResponse(respuesta)
 
-
 def writeBase(request):
     respuesta = "Listado de las paginas que tienes guardadas. "
     lista_paginas = Page.objects.all()
@@ -37,7 +36,6 @@ def pagina(request, identificador):
             respuesta += "Page: <input type= 'text' name='page'>"
             respuesta += "<input type= 'submit' value='enviar'>"
             respuesta += "</form>"
-
     elif request.method == "POST":
         name = request.POST['name']
         page = request.POST['page']
@@ -53,40 +51,4 @@ def pagina(request, identificador):
         respuesta = "He detectado un PUT, Guardado"
     else:
         respuesta = "NO PUEDES HACER ESTA OPERACION"
-    return HttpResponse(respuesta)
-
-
-# BUSCANDO A TRAVES DEL NOMBRE DEL RECURSO
-@csrf_exempt
-def pagina2(request, identificador):
-    if request.method == "GET":
-        # Buscar en la base de datos
-        try:
-            pagina = Page.objects.get(name=identificador)
-            # si existe: enlace con la pagina
-            respuesta = "<a href=" + pagina.page + ">" + pagina.page + "</a>"
-
-        except Page.DoesNotExist:
-            # no existe
-            respuesta = "No existe la pagina " + identificador
-            respuesta += "<form action='/pagina/prueba' method='post'>"
-            respuesta += "Name: <input type= 'text' name='name'>"
-            respuesta += "Page: <input type= 'text' name='page'>"
-            respuesta += "<input type= 'submit' value='enviar'>"
-            respuesta += "</form>"
-
-    elif request.method == "POST":
-        name = request.POST['name']
-        page = request.POST['page']
-        pagina = Page(name=name, page=page)
-        pagina.save()
-        respuesta = "He detectado un POST. Guardado en la base de datos"
-
-    elif request.method == "PUT":
-        print("DETECTO PUT")
-        prueba = request.body.decode('utf-8')
-        name,page = prueba.split(",")
-        pagina = Page(name=name, page=page)
-        pagina.save()
-        respuesta = "He detectado un PUT, Guardado"
     return HttpResponse(respuesta)
