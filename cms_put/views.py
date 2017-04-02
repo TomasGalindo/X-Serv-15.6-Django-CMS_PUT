@@ -19,6 +19,7 @@ def writeBase(request):
     respuesta += "<br>Debe buscar por Id"
     return HttpResponse(respuesta)
 
+
 # BUSCANDO A TRAVES DEL IDENTIFICADOR
 @csrf_exempt
 def pagina(request, identificador):
@@ -45,7 +46,7 @@ def pagina(request, identificador):
     elif request.method == "PUT":
         print("DETECTO PUT")
         prueba = request.body.decode('utf-8')
-        name,page = prueba.split(",")
+        name, page = prueba.split(",")
         pagina = Page(name=name, page=page)
         pagina.save()
         respuesta = "He detectado un PUT, Guardado"
